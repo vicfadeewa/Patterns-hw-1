@@ -1,15 +1,10 @@
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
-
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -24,8 +19,6 @@ public class CardDeliveryTest {
     @Test
     @DisplayName("Should successful plan meeting")
     void shouldSuccessfulPlanMeeting() {
-
-        //DataGenerator.generateCity();
 
         var validUser = DataGenerator.Registration.generateUser("ru");
         var firstMeetingDate = DataGenerator.generateDate(4);
@@ -44,7 +37,7 @@ public class CardDeliveryTest {
         $(Selectors.byText("Запланировать")).click();
         $(Selectors.withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
-        $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText("Встреча запланирована на " + firstMeetingDate)).shouldBe(visible);
+        $("[data-test-id='success-notification'] .notification__content").shouldHave(exactText("Встреча успешно запланирована на " + firstMeetingDate)).shouldBe(visible);
 
         $("[data-test-id='date'] input").press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id='date'] input").setValue(secondMeetingDate);
@@ -56,7 +49,7 @@ public class CardDeliveryTest {
 
         $("[data-test-id='replan-notification'] button").click();
         $("[data-test-id='success-notification'] .notification__content")
-                .shouldHave(exactText("Встреча запланирована на " + secondMeetingDate))
+                .shouldHave(exactText("Встреча успешно запланирована на " + secondMeetingDate))
                 .shouldBe(visible);
     }
 }
